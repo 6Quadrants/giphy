@@ -28,11 +28,25 @@ for (var i = 0;  i < topics.length; i++) {
     
     .then(function(response) {
 
-        var gifRate = response.data.rating;
-        var gifImage = response.data.image_original_url;
+       console.log(response.data[0].bitly_url);
 
-        console.log(gifRate);
-        console.log(gifImage);
+        // var gifRate = response.data.rating;
+        var data = response;
+        var data2 = response.data;
+
+        var gifImage = response.data[0].bitly_url;
+
+        // console.log(data);
+        // console.log(data2);
+        // console.log(gifImage);
+
+        var gifDiv = $("<img>");
+        gifDiv.attr("src", gifImage);
+
+        $(gifDiv).append(gifImage);
+
+        // console.log(gifRate);
+        // console.log(gifImage);
     });
 
     //     data: [
