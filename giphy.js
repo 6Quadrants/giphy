@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+var animate="";
+var still = "";
 
 var topics = ["moon", "rocket", "star", "alien", "mars", "nebula", "astronaut"];
 
@@ -18,7 +20,7 @@ for (var i = 0;  i < topics.length; i++) {
         var gifSearch = $(this).attr("data-topic");
         console.log(gifSearch);
 
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=B8spp3ekfXWAhm3YD1L5zsQXYplNCh1x";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=B8spp3ekfXWAhm3YD1L5zsQXYplNCh1x&limit=10&rating=g";
 
 
     $.ajax({
@@ -28,39 +30,51 @@ for (var i = 0;  i < topics.length; i++) {
     
     .then(function(response) {
 
-       console.log(response.data[0].bitly_url);
+        var results = response.data;
 
-        // var gifRate = response.data.rating;
-        var data = response;
-        var data2 = response.data;
 
-        var gifImage = response.data[0].bitly_url;
-
-        // console.log(data);
-        // console.log(data2);
-        // console.log(gifImage);
-
-        var gifDiv = $("<img>");
-        gifDiv.attr("src", gifImage);
-
-        $(gifDiv).append(gifImage);
-
-        // console.log(gifRate);
-        // console.log(gifImage);
-    });
-
-    //     data: [
-    //         {
-    //         rating: "",
+        for (var i = 0; i < results.length; i++) {
             
-    //         },
-    //     ];
- 
+            var gifDiv = $("<div>");
+            var p = $("<p>").text("Rating: " + results[i].rating);
+
+            var spaceGif = $("<img>");
+
+            spaceGif.attr("src", results[i].images.fixed_height_still.url);
+         
+           animate = spaceGif.attr("src", results[i].images.fixed_height.url);
+            still = spaceGif.attr("src", results[i].images.fixed_height_still.url);
+
+            // spaceGifStill.attr("src", results[i].images.fixed_height_still.url);
+
+            // var stillState =  spaceGif.attr("src", results[i].images.fixed_height_still.url);
+
+
+            gifDiv.append(still);
+            gifDiv.append(p);
+
+
+                $(gifDiv).on("click", function() {
+                //    var animate =  $(this).attr("src", results[i].images.fixed_height.url);
+                // //    var still = $(this).attr("src", results[i].images.fixed_height_still.url);
+
+                    $(gifDiv).append(animate);
+                })
+           
+            
+
+            $("#gifbox").prepend(gifDiv);
+
+        
+
+    
+            }
+
+  
 
     });
 
 });
 
-
-
+});
 
